@@ -41,9 +41,13 @@ namespace DataObject
         public bool SampleIsActive { get; set; }
         public int insertedBy { get; set; }
         public int sampleInsertedBy { get; set; }
+        public int doSealNumber { get; set; }
+        public string documentName { get; set; }
+        public string documentBase64 { get; set; }  
+
     }
 
-  
+
     public class InsertSampleResponseDO
     {
         public bool Success { get; set; }

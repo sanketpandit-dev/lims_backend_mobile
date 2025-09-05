@@ -15,6 +15,15 @@ namespace DataObject
         
     }
 
+    public class UpdateSealRequestDO
+    {
+
+        public int UserId { get; set; }
+        public int p_request_id { get; set; }
+        public string RequestedDate { get; set; }
+        public int SealNumbers { get; set; }
+
+    }
     public class sealNumberDO
     {
         public int UserId { get; set; }

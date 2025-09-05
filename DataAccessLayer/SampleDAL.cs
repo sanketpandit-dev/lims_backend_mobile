@@ -33,6 +33,11 @@ namespace DataAccessLayer
                 mysqlParamList.Add(DataClass.GetParameter("@p_area", request.Area));
 
                 mysqlParamList.Add(DataClass.GetParameter("@p_inserted_by", insertedBy));
+
+                mysqlParamList.Add(DataClass.GetParameter("@p_document_name", request.documentName));
+                mysqlParamList.Add(DataClass.GetParameter("@p_documents", request.documentBase64));
+                mysqlParamList.Add(DataClass.GetParameter("@p_do_seal_numbers", request.doSealNumber));
+
                 mysqlParamList.Add(DataClass.GetParameter("@p_sample_code_number", request.SampleCodeNumber));
                 mysqlParamList.Add(DataClass.GetParameter("@p_collection_date", request.CollectionDate));
                 mysqlParamList.Add(DataClass.GetParameter("@p_place_of_collection", request.PlaceOfCollection));

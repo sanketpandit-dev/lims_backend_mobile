@@ -18,7 +18,7 @@ namespace LIMS.Controllers
         [HttpPost("GetForm6Data")]
         [ValidateToken]
         [ValidateEncryptedRequest]
-        public IActionResult GetForm6Data([FromBody]  EncryptedRequest request)
+        public IActionResult GetForm6Data([FromBody] EncryptedRequest request)
         {
             int UserId = 0;
             int.TryParse(HttpContext.Items["UserId"]?.ToString(), out UserId);

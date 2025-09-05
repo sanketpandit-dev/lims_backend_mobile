@@ -20,6 +20,8 @@ namespace LIMS.Controllers
         {
             int userId = 0;
             int.TryParse(HttpContext.Items["UserId"].ToString(), out userId);
+           
+
 
             try
             {
@@ -46,6 +48,7 @@ namespace LIMS.Controllers
 
 
                 return Ok(encryptedResponse);
+                //return Ok(result);
             }
             catch (Exception ex)
             {

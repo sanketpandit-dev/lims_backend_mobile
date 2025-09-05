@@ -57,6 +57,10 @@ namespace DataObject
         public string Division { get; set; }
         public string Region { get; set; }
         public string Area { get; set; }
+        public int do_seal_numbers { get; set; }
+
+        public string documents { get; set; }
+        public string document_name { get; set; }
     }
 
 }

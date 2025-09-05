@@ -59,6 +59,30 @@ namespace DataAccessLayer
             return listdata;
         }
 
+        public List<UpdateSealRequestDO> UpdateSealRequest(UpdateSealRequestDO request, int insertedBy)
+        {
+            List<UpdateSealRequestDO> result = new List<UpdateSealRequestDO>();
 
+            try
+            {
+                getConvertedData Getdataconvert = new getConvertedData();
+                List<MySqlParameter> mysqlParamList = new List<MySqlParameter>();
+
+                mysqlParamList.Add(DataClass.GetParameter("@p_user_id", request.UserId));
+                mysqlParamList.Add(DataClass.GetParameter("@p_requested_date", request.RequestedDate));
+                mysqlParamList.Add(DataClass.GetParameter("@p_seal_number_count", request.SealNumbers));
+                mysqlParamList.Add(DataClass.GetParameter("@p_request_id", request.p_request_id));
+
+                result = Getdataconvert.getdata<UpdateSealRequestDO>(
+                    DataClass.getreaderFromSPWithParm(mysqlParamList, "limsmgt", "SP_update_seal_requesst")
+                );
+            }
+            catch (Exception ex)
+            {
+                LoggerDAL.FnStoreErrorLog("sealRequestDAL", "InsertSealRequest", Remark, ex.StackTrace, ex.Message, insertedBy);
+            }
+
+            return result;
+        }
     }
 }

@@ -50,6 +50,48 @@ namespace LIMS.Controllers
             }
         }
 
+
+        [HttpPost("updateSealRequest")]
+        [ValidateToken]
+        [ValidateEncryptedRequest]
+        public IActionResult UpdateRequest([FromBody] UpdateSealRequestDO payload)
+        {
+            int userId = 0;
+            int.TryParse(HttpContext.Items["UserId"]?.ToString(), out userId);
+
+            try
+            {
+                DecryptedJsonDataWithKey decrypted = Cryptohelper.DecryptRequest<DecryptedJsonDataWithKey>(request);
+                UpdateSealRequestDO payload = JsonConvert.DeserializeObject<UpdateSealRequestDO>(decrypted.DecryptedJsonData);
+
+                if (payload == null || payload.UserId <= 0)
+                {
+                    LoggerDAL.FnStoreErrorLog("SealRequestController", "Update", "Invalid request data.", "", "", userId);
+                    return BadRequest(ApiResponse<object>.FailureResponse("Invalid request data."));
+                }
+
+                var bal = new sealRequestBAL();
+                var result = bal.UpdateSealRequest(payload, userId);
+
+                if (!result.Success)
+                {
+                    return StatusCode(result.StatusCode, ApiResponse<object>.FailureResponse(result.Message));
+                }
+
+                var encryptedResponse = Cryptohelper.EncryptResponse(result, decrypted.ReqAesKey, decrypted.Iv);
+                return Ok(encryptedResponse);
+
+                //return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                LoggerDAL.FnStoreErrorLog("SealRequestController", "Update", "Update seal request failed", ex.StackTrace, ex.Message, userId);
+                return StatusCode(500, ApiResponse<object>.FailureResponse("Update seal request failed"));
+            }
+        }
+
+
+
         [HttpPost("GetSealRequestDetails")]
         public IActionResult GetSealRequestDetails([FromBody] getSealRequestDO payload)
         {

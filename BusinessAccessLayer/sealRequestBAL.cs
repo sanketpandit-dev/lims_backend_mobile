@@ -49,6 +49,45 @@ namespace BusinessAccessLayer
             }
         }
 
+        public ApiResponse<UpdateSealRequestDO> UpdateSealRequest(UpdateSealRequestDO request, int userId)
+        {
+            try
+            {
+                List<UpdateSealRequestDO> response = _dal.UpdateSealRequest(request, userId);
+
+                if (response.Count > 0)
+                {
+                    return new ApiResponse<UpdateSealRequestDO>
+                    {
+                        Success = true,
+                        StatusCode = 200,
+                        Message = "Seal request inserted successfully.",
+                    };
+                }
+                else
+                {
+                    return new ApiResponse<UpdateSealRequestDO>
+                    {
+                        Success = false,
+                        StatusCode = 400,
+                        Message = "Failed to insert seal request.",
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = "Error while returning data from Business Layer";
+                LoggerDAL.FnStoreErrorLog("sealRequestBAL", "InsertSealRequest", message, ex.StackTrace, ex.Message, userId);
+
+                return new ApiResponse<UpdateSealRequestDO>
+                {
+                    Success = false,
+                    StatusCode = 500,
+                    Message = "Internal error occurred.",
+                };
+            }
+        }
+
         public SealRequestResponseWrapperDO GetSealRequestData(getSealRequestDO request)
         {
             SealRequestResponseWrapperDO response = new SealRequestResponseWrapperDO();
